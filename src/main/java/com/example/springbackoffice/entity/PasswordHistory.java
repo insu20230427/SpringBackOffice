@@ -2,12 +2,12 @@ package com.example.springbackoffice.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class PasswordHistory extends Timestamped { // password 최근 3개를 저장하기 위한 entity
 
@@ -19,5 +19,4 @@ public class PasswordHistory extends Timestamped { // password 최근 3개를 �
     private User user;
 
     private String password;
-
 }

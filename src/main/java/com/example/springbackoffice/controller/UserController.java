@@ -2,6 +2,7 @@ package com.example.springbackoffice.controller;
 
 import com.example.springbackoffice.dto.ApiResult;
 import com.example.springbackoffice.dto.ProfileEditRequestDto;
+import com.example.springbackoffice.dto.ProfileResponseDto;
 import com.example.springbackoffice.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,13 @@ public class UserController {
 
     private final UserService userService;
 
+
+
+    //회원정보 조회 API
+    @GetMapping("/blog/profile")
+    public ProfileResponseDto showProfile(HttpServletRequest httpServletRequest) {
+        return userService.showProfile(httpServletRequest);
+    }
 
     //회원정보 수정 API
     @PutMapping("/edit-profile")

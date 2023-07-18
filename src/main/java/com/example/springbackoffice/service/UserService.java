@@ -2,6 +2,7 @@ package com.example.springbackoffice.service;
 
 import com.example.springbackoffice.dto.ApiResult;
 import com.example.springbackoffice.dto.ProfileEditRequestDto;
+import com.example.springbackoffice.dto.ProfileResponseDto;
 import com.example.springbackoffice.entity.PasswordHistory;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.jwt.JwtUtil;
@@ -30,6 +31,15 @@ public class UserService {
 
     private static final String ADMIN_TOKEN = "AAAABnvqaqwetK20aTBZ25hqkD";
 
+
+    //회원 정보 조회
+    @Transactional (readOnly = true)
+    public ProfileResponseDto showProfile(HttpServletRequest httpServletRequest ) {
+        User user = checkToken(httpServletRequest);
+
+        return new ProfileResponseDto(user);
+    }
+
     //회원 정보 변경
     @Transactional
     public ApiResult editProfile (ProfileEditRequestDto profileEditRequestDto, HttpServletRequest httpServletRequest) {
@@ -52,7 +62,6 @@ public class UserService {
                 return new ApiResult("최근 3번동안 사용한 비밀번호는 사용이 불가능합니다.", HttpStatus.BAD_REQUEST);
             }
         }
-
 
         //현재 비밀번호를 PasswordRepository에 저장
         PasswordHistory currentPasswordHistory = new PasswordHistory();
@@ -96,5 +105,6 @@ public class UserService {
         }
         return null;
     }
+
 
 }
