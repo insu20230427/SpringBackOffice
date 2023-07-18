@@ -3,6 +3,7 @@ package com.example.springbackoffice.entity;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private String contents;
 
     @Column(nullable = false)
-    private int post_like_count;
+    private Integer post_like_count;
 
     @JsonIgnore
     @ManyToOne
@@ -45,10 +46,6 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
 
     public void addComment(Comment comment) {
         this.commentList.add(comment);
-        // 1. commentList에 comment들을 넣기
-        // 2. 댓글작성일 기준으로 comment를 정렬하여 commentList로 다시 받기
-        // 3. 클라이언트에 반환할 용도인 commentResponseDtoList로 commentList를 복붙하기
-        // 4. 클라이언트에  commentResponseDtoList를 ResponseBody로 반환해주기
     }
 
     public void updatePost(PostRequestDto postRequestDto) {

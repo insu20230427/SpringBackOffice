@@ -16,6 +16,7 @@ public class PostResponseDto {
     private String userName;
     private String userNickName;
     private List<CommentResponseDto> commentResponseDtoList;
+    private Integer post_like_count;
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
@@ -23,6 +24,7 @@ public class PostResponseDto {
         this.contents = post.getContents();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
+        this.post_like_count = post.getPost_like_count();
         this.user_id = post.getUser().getId();
         this.userName = post.getUser().getName();
         this.userNickName = post.getUser().getNickname();
