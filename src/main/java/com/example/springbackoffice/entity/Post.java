@@ -3,6 +3,7 @@ package com.example.springbackoffice.entity;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private String contents;
 
     @Column(nullable = false)
-    private int post_like_count;
+    private Integer post_like_count;
 
     @JsonIgnore
     @ManyToOne
