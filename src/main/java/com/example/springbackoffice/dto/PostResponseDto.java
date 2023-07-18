@@ -9,7 +9,7 @@ import java.util.List;
 public class PostResponseDto {
     private Long id;
     private String title;
-    private String content;
+    private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Long user_id;
@@ -20,7 +20,7 @@ public class PostResponseDto {
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
-        this.content = post.getContent();
+        this.contents = post.getContents();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
         this.user_id = post.getUser().getId();
@@ -31,6 +31,8 @@ public class PostResponseDto {
             for (Comment comment : post.getCommentList()) {
                 this.commentResponseDtoList.add(new CommentResponseDto(comment));
             }
+            // getComments를 통해 저장된 post의 commentList의 comment들을
+            // PostResponseDto의 commentResponseDtoList에 복사하는 과정
         }
     }
 }

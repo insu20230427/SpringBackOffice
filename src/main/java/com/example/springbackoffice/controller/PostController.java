@@ -41,7 +41,10 @@ public class PostController {
     @GetMapping("/post/{id}") // 상세 게시글 조회
     @ResponseBody
     public PostResponseDto lookupPost(@PathVariable Long id) {
-        return postService.lookupPost(id); // 해당 id의 Post를 받아옴
+        return postService.lookupPost(id);
+        // 1. 해당 id의 Post를 받아오는 메서드 호출
+        // 2. 찾아온 Post를 반환시켜주기 위해 PostResponseDto에 넣어줌
+        // 3. 저장된 commentList를 CommentResponseDtoList에 복사하여 PostResponseDto를 가져와 클라이언트에 반환
     }
 
     @PutMapping("/post/{id}") // 상세 게시글 수정
