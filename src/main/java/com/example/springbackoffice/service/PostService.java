@@ -48,7 +48,7 @@ public class PostService {
 
     public PostResponseDto lookupPost(Long id) {
         Post post = findPost(id); // 해당 id의 Post객체를 참조하는 필드 post 선언하기
-        return new PostResponseDto(post); // 해당 id의 Post를 반환해주기
+        return new PostResponseDto(post); // 해당 id의 Post객체를 PostResponseDto로 넣어 컨트롤러로 반환
     }
 
     private Post findPost(Long id) {
