@@ -22,7 +22,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private String title;
 
     @Column(nullable = false, length = 3000)
-    private String content;
+    private String contents;
 
     @Column(nullable = false)
     private int post_like_count;
@@ -34,16 +34,21 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
 
 
     @OneToMany( mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>();
+    private List<Comment> commentList = new ArrayList<>()
+
 
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
+        this.contents = requestDto.getContent();
         this.user = user;
     }
 
     public void addComment(Comment comment) {
         this.commentList.add(comment);
+        // 1. commentList에 comment들을 넣기
+        // 2. 댓글작성일 기준으로 comment를 정렬하여 commentList로 다시 받기
+        // 3. 클라이언트에 반환할 용도인 commentResponseDtoList로 commentList를 복붙하기
+        // 4. 클라이언트에  commentResponseDtoList를 ResponseBody로 반환해주기
     }
 
     public void updatePost(PostRequestDto postRequestDto) {
