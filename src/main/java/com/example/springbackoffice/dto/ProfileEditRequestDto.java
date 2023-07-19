@@ -12,5 +12,5 @@ import lombok.Setter;
 public class ProfileEditRequestDto {
     private String password;
     private String changepassword;
-    private String selfInroduction;
+    private String selfIntroduction;
 }

@@ -8,8 +8,9 @@ import com.example.springbackoffice.dto.SignupRequestDto;
 import com.example.springbackoffice.entity.PasswordHistory;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
+import com.example.springbackoffice.repository.PasswordRepository;
 import com.example.springbackoffice.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
+
+    private final PasswordRepository passwordRepository;
+
     private final UserRepository userRepository;
     // BlackList 를 저장할 Repository
 //    private final TokenBlacklistRepository tokenBlacklistRepository;
@@ -79,20 +83,20 @@ public class UserService {
     }
     //회원 정보 조회
     @Transactional (readOnly = true)
-    public ProfileResponseDto showProfile(HttpServletRequest httpServletRequest ) {
-        User user = jwtUtil.checkToken(httpServletRequest);
+    public ProfileResponseDto showProfile(UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
 
         return new ProfileResponseDto(user);
     }
 
     //회원 정보 변경
     @Transactional
-    public ApiResult editProfile (ProfileEditRequestDto profileEditRequestDto, HttpServletRequest httpServletRequest) {
+    public ApiResult editProfile (ProfileEditRequestDto profileEditRequestDto, UserDetailsImpl userDetails) {
 
-        User user = jwtUtil.checkToken(httpServletRequest);
+        User user = userDetails.getUser();
 
         String password = profileEditRequestDto.getPassword();
-        String introduction = profileEditRequestDto.getSelfInroduction();
+        String introduction = profileEditRequestDto.getSelfIntroduction();
         String changePassword = profileEditRequestDto.getChangepassword();;
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호

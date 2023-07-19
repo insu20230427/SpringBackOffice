@@ -1,18 +1,14 @@
 package com.example.springbackoffice.controller;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.ApiResult;
-import com.example.springbackoffice.dto.AuthRequestDto;
-import com.example.springbackoffice.dto.ProfileEditRequestDto;
-import com.example.springbackoffice.dto.ProfileResponseDto;
-import com.example.springbackoffice.dto.SignupRequestDto;
+import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.jwt.JwtUtil;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -52,14 +48,14 @@ public class UserController {
     }
 
     //회원정보 조회 API
-    @GetMapping("/users/profile")
-    public ProfileResponseDto showProfile(HttpServletRequest httpServletRequest) {
-        return userService.showProfile(httpServletRequest);
+    @GetMapping("/auth/profile")
+    public ProfileResponseDto showProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.showProfile(userDetails);
     }
 
     //회원정보 수정 API
-    @PutMapping("/users-profile")
-    public ApiResult editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, HttpServletRequest httpServletRequest) {
-        return userService.editProfile(profileEditRequestDto, httpServletRequest);
+    @PutMapping("/auth/edit-profile")
+    public ApiResult editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.editProfile(profileEditRequestDto, userDetails);
     }
 }

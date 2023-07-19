@@ -1,6 +1,6 @@
 package com.example.springbackoffice.dto;
 
-import com.sparta.springlevelassignment.entity.User;
+import com.example.springbackoffice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,9 +23,9 @@ public class ProfileResponseDto {
     // Profile 변경 ResponseDto 현재 프로필 조회시 BlogResponseDto와 CommentResponseDto의 각각 생성자에 맞는 필드가 나오는 것이 아닌, 모든 필드가 나옴
     public ProfileResponseDto(User user) {
         this.username = user.getUsername();
-        this.selfInroduction = user.getIntroduction();
-        this.blogList = user.getBlogList().stream()
-                .map(blog -> new BlogResponseDto(blog, blog.getCommentList()))
+        this.selfInroduction = user.getSelfIntroduction();
+        this.blogList = user.getPostList().stream()
+                .map(blog -> new PostResponseDto(blog, blog.getCommentList()))
                 .collect(Collectors.toList());
         this.commentList = user.getCommentList().stream()
                 .map(CommentResponseDto::new)
