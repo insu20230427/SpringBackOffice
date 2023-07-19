@@ -10,3 +10,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //인증이 된 유저만 이름으로 조회
     // Optional<User> findByEmail(String email);
 }
+
