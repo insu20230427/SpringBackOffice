@@ -3,6 +3,8 @@ package com.example.springbackoffice.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
@@ -25,7 +27,6 @@ public class ApiResponseDto {
     }
 
     public ApiResponseDto() {
-
     }
 }
 

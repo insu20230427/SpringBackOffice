@@ -43,9 +43,6 @@ public class CommentController {
 //        return "posts";
 //    }
 
-
-
-
     @PutMapping("/comments/{id}") // 댓글 수정
     public ResponseEntity<ApiResponseDto> updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
         try {
@@ -64,6 +61,19 @@ public class CommentController {
             return ResponseEntity.ok().body(new ApiResponseDto(HttpStatus.OK.value(), "댓글 삭제 성공"));
         } catch (RejectedExecutionException e) {
             return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "작성자만 삭제 할 수 있습니다."));
+        }
+    }
+
+    // 좋아요
+    @PutMapping("/comments/{id}/like")
+    public ResponseEntity<ApiResponseDto> addLikeComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        try {
+            ApiResponseDto responseDto = commentService.addLikeComment(id, userDetails);
+            return ResponseEntity.ok().body(responseDto);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto("자신의 댓글에는 좋아요를 할 수 없습니다.", HttpStatus.BAD_REQUEST.value()));
         }
     }
 

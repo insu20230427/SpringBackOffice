@@ -1,6 +1,7 @@
 package com.example.springbackoffice.service;
 
 import com.example.springbackoffice.dto.ApiResponseDto;
+<<<<<<< HEAD
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.example.springbackoffice.dto.PostResponseDto;
 import com.example.springbackoffice.entity.Post;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-//    private final CommentRepository commentRepository;
+    private final PostLikedInfoRepository postLikedInfoRepository;
 
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
 
@@ -89,5 +90,46 @@ public class PostService {
         postRepository.delete(post.get());
 
         return ResponseEntity.status(200).body(new ApiResponseDto(HttpStatus.OK.value(), "게시글 삭제 성공"));
+    }
+// post 좋아요
+    @Transactional
+    public ApiResponseDto addLikePost(Long postId, UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUserId();
+        // postId와 userId 를이용해서 사용자가 이미 Like를 눌렀는지 확인
+
+        // 해당 게시물이 존재하는지 확인
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."));
+
+        //자신의 게시글에 좋아요 X
+        if (post.getUser().getUserId().equals(userId)) {
+            throw new RejectedExecutionException("자신의 게시글에는 '좋아요'를 할 수 없습니다.");
+        }
+        PostLikedInfo postLikedInfo = postLikedInfoRepository.findByPostIdAndUserId(postId, userId).orElse(null);
+
+        if (postLikedInfo == null) {
+            postLikedInfo = new PostLikedInfo(postId, userId);
+            postLikedInfo.setLiked(true);
+            postLikedInfoRepository.save(postLikedInfo);
+            updatePostLikedCount(postId);
+            return new ApiResponseDto("좋아요", 200);
+        } else {
+            postLikedInfo.setLiked(!postLikedInfo.getLiked());
+            postLikedInfoRepository.save(postLikedInfo);
+            updatePostLikedCount(postId);
+            if (postLikedInfo.getLiked()) {
+                return new ApiResponseDto("좋아요", 200);
+            } else {
+                return new ApiResponseDto("좋아요 취소", 200);
+            }
+        }
+    }
+
+    // count한 like 저장해주기
+    private void updatePostLikedCount(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        Integer postLikedCount = postLikedInfoRepository.countByPostIdAndIsLikedIsTrue(postId);
+        post.setPostLikedCount(postLikedCount);
     }
 }

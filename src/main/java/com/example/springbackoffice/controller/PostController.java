@@ -1,5 +1,6 @@
 package com.example.springbackoffice.controller;
 
+<<<<<<< HEAD
 
 import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.PostRequestDto;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class PostController {
@@ -58,5 +60,17 @@ public class PostController {
     public ResponseEntity<ApiResponseDto> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.deletePost(id, userDetails.getUser());
     }
-}
 
+    // 좋아요
+    @PutMapping("/posts/{id}/like")
+    public ResponseEntity<ApiResponseDto> addLikePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        try {
+            ApiResponseDto responseDto = postService.addLikePost(id, userDetails);
+            return ResponseEntity.ok().body(responseDto);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto("자신의 게시글에는 좋아요를 할 수 없습니다.", HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+}
