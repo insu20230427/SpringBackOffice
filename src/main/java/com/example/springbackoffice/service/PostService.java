@@ -51,7 +51,7 @@ public class PostService {
         return new PostResponseDto(post); // 해당 id의 Post객체를 PostResponseDto로 넣어 컨트롤러로 반환
     }
 
-    private Post findPost(Long id) {
+    public Post findPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 게시물은 존재하지 않습니다."));
     } // 해당 id의 Post객체 반환
 

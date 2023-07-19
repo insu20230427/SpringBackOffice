@@ -23,6 +23,10 @@ public class ApiResponseDto {
         this.message = message;
         this.data = data;
     }
+
+    public ApiResponseDto() {
+
+    }
 }
 
 
