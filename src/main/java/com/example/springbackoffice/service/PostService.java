@@ -4,12 +4,12 @@ import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.example.springbackoffice.dto.PostResponseDto;
 import com.example.springbackoffice.entity.Post;
+import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
+//    private final CommentRepository commentRepository;
 
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
 
@@ -63,7 +63,7 @@ public class PostService {
 
         Optional<Post> post = postRepository.findById(id); // 해당id의 Post 가져오기
 
-        if (!post.isPresent() || !Objects.equals(post.get().getUser().getName(), user.getName())) {
+        if (!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(), user.getUsername())) {
             log.error("게시글이 존재하지 않거나 게시글 작성자가 아닙니다.");
             return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "게시글 수정 실패"));
         }
@@ -81,7 +81,7 @@ public class PostService {
     public ResponseEntity<ApiResponseDto> deletePost(Long id, User user) {
         Optional<Post> post = postRepository.findById(id);
 
-        if(!post.isPresent() || !Objects.equals(post.get().getUser().getName(),user.getName())) {
+        if(!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(),user.getUsername())) {
             log.error("게시글이 존재하지 않거나 게시글의 작성자가 아닙니다.");
             return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "게시글 삭제 실패"));
         }

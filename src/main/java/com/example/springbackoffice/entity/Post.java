@@ -3,12 +3,10 @@ package com.example.springbackoffice.entity;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.example.springbackoffice.entity.User;
-import java.util.ArrayList;
+
 @Entity
 @Getter
 @Setter
@@ -25,7 +23,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     @Column(nullable = false, length = 3000)
     private String contents;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer post_like_count;
 
     @JsonIgnore
@@ -34,22 +32,22 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private User user;
 
 
-    @OneToMany( mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>()
+//    @OneToMany( mappedBy = "post", cascade = CascadeType.ALL)
+//    private List<Comment> commentList = new ArrayList<>();
 
 
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
-        this.contents = requestDto.getContent();
+        this.contents = requestDto.getContents();
         this.user = user;
     }
 
-    public void addComment(Comment comment) {
-        this.commentList.add(comment);
-    }
+//    public void addComment(Comment comment) {
+//        this.commentList.add(comment);
+//    }
 
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
+        this.contents = postRequestDto.getContents();
     }
 }
