@@ -117,8 +117,8 @@ public class JwtUtil { // 다른 객체에 의존하지 않고 하나의 모듈�
     }
 
     // HttpServletRequest에서 Cookiew Value : JWT 가져오기
-    public String getTokenFromRequest(HttpServletRequest httpServletRequest) {
-        Cookie[] cookies = httpServletRequest.getCookies();
+    public String getTokenFromRequest(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(AUTHORIZATION_HEADER)) {
@@ -133,13 +133,36 @@ public class JwtUtil { // 다른 객체에 의존하지 않고 하나의 모듈�
         return null;
     }
 
-    public String resolveToken(HttpServletRequest httpServletRequest) { // HttpServletRequset 안에는 우리가 가져와야 할 토큰이 헤더에 들어있음
-//        String requestToken = request.getHeader(AUTHORIZATION_HEADER); // 파라미터로 가져올 값을 넣어주면 됨
-        String bearerToken = getTokenFromRequest(httpServletRequest);
+    public String resolveToken(HttpServletRequest request) { // HttpServletRequset 안에는 우리가 가져와야 할 토큰이 헤더에 들어있음
+        String bearerToken = getTokenFromRequest(request);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) { // 코드가 있는지, BEARER로 시작하는지 확인
             return bearerToken.substring(7); // 앞에 7글자를 지워줌 BEARER가 6글자이고 한칸이 띄어져있기때문
         }
         return null;
     }
 
+
+    // Token 체크
+    public User checkToken(HttpServletRequest request){
+
+        String token = resolveToken(request);
+        Claims claims;
+
+        if (token != null) {
+            if (validateToken(token)) {
+                // 토큰에서 사용자 정보 가져오기
+                claims = getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+            );
+            return user;
+
+        }
+        return null;
+    }
 }

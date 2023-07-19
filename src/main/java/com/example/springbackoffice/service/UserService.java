@@ -29,13 +29,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordRepository passwordRepository;
 
-    private static final String ADMIN_TOKEN = "AAAABnvqaqwetK20aTBZ25hqkD";
-
-
     //회원 정보 조회
     @Transactional (readOnly = true)
     public ProfileResponseDto showProfile(HttpServletRequest httpServletRequest ) {
-        User user = checkToken(httpServletRequest);
+        User user = jwtUtil.checkToken(httpServletRequest);
 
         return new ProfileResponseDto(user);
     }
@@ -44,7 +41,7 @@ public class UserService {
     @Transactional
     public ApiResult editProfile (ProfileEditRequestDto profileEditRequestDto, HttpServletRequest httpServletRequest) {
 
-        User user = checkToken(httpServletRequest);
+        User user = jwtUtil.checkToken(httpServletRequest);
 
         String password = profileEditRequestDto.getPassword();
         String introduction = profileEditRequestDto.getSelfInroduction();
@@ -82,29 +79,4 @@ public class UserService {
         userRepository.save(user);
         return new ApiResult("프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
     }
-
-    // JWT 토큰 체크
-    public User checkToken(HttpServletRequest httpServletRequest){
-
-        String token = jwtUtil.resolveToken(httpServletRequest);
-        Claims claims;
-
-        if (token != null) {
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
-            );
-            return user;
-        }
-        return null;
-    }
-
-
 }
