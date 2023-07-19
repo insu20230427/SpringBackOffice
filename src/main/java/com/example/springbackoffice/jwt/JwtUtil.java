@@ -1,6 +1,8 @@
 package com.example.springbackoffice.jwt;
 
+import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
+import com.example.springbackoffice.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -27,6 +29,7 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtUtil { // 다른 객체에 의존하지 않고 하나의 모듈로서 동작
+    private final UserRepository userRepository;
 
     // ---------- JWT 데이터 -----------
 
