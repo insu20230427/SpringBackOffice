@@ -1,6 +1,7 @@
 package com.example.springbackoffice.config;
 
 import com.example.springbackoffice.jwt.JwtUtil;
+import com.example.springbackoffice.jwt.JwtAuthorizationFilter;
 import com.example.springbackoffice.security.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
