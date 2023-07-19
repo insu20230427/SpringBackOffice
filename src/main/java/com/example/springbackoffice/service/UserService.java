@@ -1,10 +1,6 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.ApiResult;
-import com.example.springbackoffice.dto.AuthRequestDto;
-import com.example.springbackoffice.dto.ProfileEditRequestDto;
-import com.example.springbackoffice.dto.ProfileResponseDto;
-import com.example.springbackoffice.dto.SignupRequestDto;
+import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.entity.PasswordHistory;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
@@ -19,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -91,7 +88,7 @@ public class UserService {
 
     //회원 정보 변경
     @Transactional
-    public ApiResult editProfile (ProfileEditRequestDto profileEditRequestDto, UserDetailsImpl userDetails) {
+    public ApiResponseDto editProfile (ProfileEditRequestDto profileEditRequestDto, UserDetailsImpl userDetails) {
 
         User user = userDetails.getUser();
 
@@ -100,15 +97,18 @@ public class UserService {
         String changePassword = profileEditRequestDto.getChangepassword();;
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호
-            return new ApiResult("기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto("기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
         }
 
+        if (Objects.equals(password, changePassword)) {
+            return new ApiResponseDto("같은 비밀번호로는 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         //최근 3회 비밀번호 가져오기
         List<PasswordHistory> passwordHistoryList = passwordRepository.findTop3ByUserOrderByModifiedAtDesc(user);
 
         for (PasswordHistory passwordHistory : passwordHistoryList) {
             if (passwordEncoder.matches(changePassword, passwordHistory.getPassword())) {
-                return new ApiResult("최근 3번동안 사용한 비밀번호는 사용이 불가능합니다.", HttpStatus.BAD_REQUEST);
+                return new ApiResponseDto("최근 3번동안 사용한 비밀번호는 사용이 불가능합니다.", HttpStatus.BAD_REQUEST);
             }
         }
 
@@ -129,6 +129,6 @@ public class UserService {
         user.setPassword(newPassword);
         user.setSelfIntroduction(introduction);
         userRepository.save(user);
-        return new ApiResult("프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
+        return new ApiResponseDto("프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
     }
 }
