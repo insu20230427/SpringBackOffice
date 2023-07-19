@@ -23,7 +23,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     @Column(nullable = false, length = 3000)
     private String contents;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer post_like_count;
 
     @JsonIgnore
