@@ -1,5 +1,6 @@
 package com.example.springbackoffice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,14 +14,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Timestamped {
 
-    // 블로그 작성 시간
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-mm-dd")
     @CreatedDate
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-
-    // 블로그 수정 시간
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-mm-dd")
     @LastModifiedDate
     @Column
     @Temporal(TemporalType.TIMESTAMP)
