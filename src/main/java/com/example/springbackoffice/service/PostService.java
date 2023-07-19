@@ -22,19 +22,21 @@ public class PostService {
     // post 좋아요
     @Transactional
     public ApiResponseDto addLikePost(Long postId, UserDetailsImpl userDetails) {
-        String username = userDetails.getUsername();
-        // postId와 username을 이용해서 사용자가 이미 Like를 눌렀는지 확인
+        Long userId = userDetails.getUserId();
+        // postId와 userId 를이용해서 사용자가 이미 Like를 눌렀는지 확인
 
-        //자신의 게시글에 좋아요 X
+        // 해당 게시물이 존재하는지 확인
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."));
-        if (post.getUser().getUsername().equals(username)) {
+
+        //자신의 게시글에 좋아요 X
+        if (post.getUser().getUserId().equals(userId)) {
             throw new RejectedExecutionException("자신의 게시글에는 '좋아요'를 할 수 없습니다.");
         }
-        PostLikedInfo postLikedInfo = postLikedInfoRepository.findByPostIdAndUsername(postId, username).orElse(null);
+        PostLikedInfo postLikedInfo = postLikedInfoRepository.findByPostIdAndUserId(postId, userId).orElse(null);
 
         if (postLikedInfo == null) {
-            postLikedInfo = new PostLikedInfo(postId, username);
+            postLikedInfo = new PostLikedInfo(postId, userId);
             postLikedInfo.setLiked(true);
             postLikedInfoRepository.save(postLikedInfo);
             updatePostLikedCount(postId);

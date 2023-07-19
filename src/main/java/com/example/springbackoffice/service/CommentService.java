@@ -25,19 +25,20 @@ public class CommentService {
     // comment 좋아요
     @Transactional
     public ApiResponseDto addLikeComment(Long commentId, UserDetailsImpl userDetails) {
-        String username = userDetails.getUsername();
-        // commentId와 username을 이용해서 사용자가 이미 Like를 눌렀는지 확인
+        Long userId = userDetails.getUserId();
 
-        //자신의 게시글에 좋아요 X
+        // 존재하는 댓글인지 확인
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 댓글이 존재하지 않습니다."));
-        if (comment.getUser().getUsername().equals(username)) {
+
+        //자신의 댓글에 좋아요 X
+        if (comment.getUser().getUserId().equals(userId)) {
             throw new RejectedExecutionException("자신의 댓글에는 '좋아요'를 할 수 없습니다.");
         }
-        CommentLikedInfo commentLikedInfo = commentLikedInfoRepository.findByCommentIdAndUsername(commentId, username).orElse(null);
+        CommentLikedInfo commentLikedInfo = commentLikedInfoRepository.findByCommentIdAndUserId(commentId, userId).orElse(null);
 
         if (commentLikedInfo == null) {
-            commentLikedInfo = new CommentLikedInfo(commentId, username);
+            commentLikedInfo = new CommentLikedInfo(commentId, userId);
             commentLikedInfo.setLiked(true);
             commentLikedInfoRepository.save(commentLikedInfo);
             updateCommentLikedCount(commentId);
@@ -58,7 +59,7 @@ public class CommentService {
     private void updateCommentLikedCount(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        Integer commentLikedCount = commentLikedInfoRepository.countByCommentIdAndIsLikedIsTrue(commentId);
+        Integer commentLikedCount = commentLikedInfoRepository.countByCommentIdAndLikedIsTrue(commentId);
         comment.setCommentLikedCount(commentLikedCount);
     }
 }

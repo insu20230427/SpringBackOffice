@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface CommentLikedInfoRepository extends JpaRepository<CommentLikedInfo, Long> {
-    Integer countByCommentIdAndIsLikedIsTrue(Long commentId);
+    Integer countByCommentIdAndLikedIsTrue(Long commentId);
 
-    Optional<CommentLikedInfo> findByCommentIdAndUsername(Long commentId, String username);
+    Optional<CommentLikedInfo> findByCommentIdAndUserId(Long commentId, Long userId);
 }

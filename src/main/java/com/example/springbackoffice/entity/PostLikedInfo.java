@@ -8,25 +8,31 @@ public class PostLikedInfo extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_liked_id")
+    @Column
     private Long id;
+
+    @Column(nullable = false)
     private Long postId;
-    private String username;
-    private Boolean isLiked;
+
+    @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
+    private Boolean liked;
 
     public PostLikedInfo() {
 
     }
-    public PostLikedInfo(Long postId, String username) {
+    public PostLikedInfo(Long postId, Long userId) {
         this.postId = postId;
-        this.username = username;
+        this.userId = userId;
     }
 
     public Boolean getLiked() {
-        return isLiked;
+        return liked;
     }
 
     public void setLiked(Boolean liked) {
-        isLiked = liked;
+        this.liked = liked;
     }
 }

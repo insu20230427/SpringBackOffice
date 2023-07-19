@@ -8,25 +8,31 @@ public class CommentLikedInfo extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_liked_id")
+    @Column
     private Long id;
+
+    @Column(nullable = false)
     private Long commentId;
-    private String username;
-    private Boolean isLiked;
+
+    @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
+    private Boolean liked;
 
     public CommentLikedInfo() {
 
     }
-    public CommentLikedInfo(Long commentId, String username) {
+    public CommentLikedInfo(Long commentId, Long userId) {
         this.commentId = commentId;
-        this.username = username;
+        this.userId = userId;
     }
 
     public Boolean getLiked() {
-        return isLiked;
+        return liked;
     }
 
     public void setLiked(Boolean liked) {
-        isLiked = liked;
+        this.liked = liked;
     }
 }
