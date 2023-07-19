@@ -65,7 +65,7 @@ public class UserService {
             }
             role = UserRoleEnum.ADMIN;
         }
-        String authkey = requestDto.getAuthKey();
+//        String authkey = requestDto.getAuthKey();
         User user = new User(username, password, role);
         userRepository.save(user);
     }

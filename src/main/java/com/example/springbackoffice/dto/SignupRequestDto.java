@@ -23,6 +23,6 @@ public class SignupRequestDto {
 
     private boolean admin = false;
     private String adminToken = "";
-    private String authKey;
-    private boolean isConfirm =false;
+//    private String authKey;
+//    private boolean isConfirm =false;
 }
