@@ -15,7 +15,7 @@ public class PasswordHistory extends Timestamped { // password 최근 3개를 �
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.REMOVE)
     private User user;
 
     private String password;
