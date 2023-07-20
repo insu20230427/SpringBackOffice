@@ -14,6 +14,8 @@ public class UserResponseDto {
     private String email;
     private String intro;
     //private UserRoleEnum role;
+    private Integer followerCount;
+    private Integer followingCount;
 
     public UserResponseDto(User user) {
         this.id=user.getId();
@@ -22,5 +24,7 @@ public class UserResponseDto {
 //        this.email=user.getEmail();
         this.intro=user.getSelfIntroduction();
         //this.role=user.getRole();
+        this.followerCount = user.getFollowerCount();
+        this.followingCount = user.getFollowingCount();
     }
 }

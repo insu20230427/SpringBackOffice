@@ -17,7 +17,7 @@ public class Follow extends Timestamped {
     @Column(nullable = false)
     private Long followingId;
     @Column(nullable = false)
-    private Boolean followed;
+    private boolean followed;
 
     public Follow() {
 
@@ -27,11 +27,11 @@ public class Follow extends Timestamped {
         this.followingId = followingId;
     }
 
-    public Boolean getFollowed() {
+    public boolean getFollowed() {
         return followed;
     }
 
-    public void setFollowed(Boolean followed) {
+    public void setFollowed(boolean followed) {
         this.followed = followed;
     }
 }

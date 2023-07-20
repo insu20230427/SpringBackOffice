@@ -18,7 +18,7 @@ public class CommentLikedInfo extends Timestamped {
     private Long userId;
 
     @Column(nullable = false)
-    private Boolean liked;
+    private boolean liked;
 
     public CommentLikedInfo() {
 
@@ -28,11 +28,11 @@ public class CommentLikedInfo extends Timestamped {
         this.userId = userId;
     }
 
-    public Boolean getLiked() {
+    public boolean getLiked() {
         return liked;
     }
 
-    public void setLiked(Boolean liked) {
+    public void setLiked(boolean liked) {
         this.liked = liked;
     }
 }

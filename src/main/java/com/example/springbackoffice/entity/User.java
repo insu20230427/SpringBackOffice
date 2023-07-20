@@ -40,6 +40,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    @Column(nullable = false)
+    private Integer followerCount;
+
+    @Column(nullable = false)
+    private Integer followingCount;
 //    이메일 인증 구현하려면 필요한 엔티티
 //    @Column(name="user_confirmn",nullable = false)
 //    @ColumnDefault("false")
@@ -58,5 +63,16 @@ public class User {
 //        쓰려면 User 안에 String email 추가
         this.role = role;
 //        this.isConfirm=false;
+        this.followerCount = 0;
+        this.followingCount = 0;
     }
+
+    public void setFollowerCount(Integer followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public void setFollowingCount(Integer followingCount) {
+        this.followingCount = followingCount;
+    }
+
 }

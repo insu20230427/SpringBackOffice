@@ -1,6 +1,7 @@
 package com.example.springbackoffice.controller;
 
 import com.example.springbackoffice.dto.ApiResponseDto;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class FollowController {
         } catch (ResponseStatusException e) {
             return ResponseEntity.notFound().build();
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("자신의 게시글에는 좋아요를 할 수 없습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "자신을 팔로우 할 수 없습니다."));
         }
     }
 }
