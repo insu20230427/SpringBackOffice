@@ -32,16 +32,4 @@ public class FollowController {
             return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "자신을 팔로우 할 수 없습니다."));
         }
     }
-
-    @GetMapping("/follow/followers/{userId}")
-    public ResponseEntity<List<String>> getFollowers(@PathVariable Long userId) {
-        List<String> followers = followService.getFollowerList(userId);
-        return new ResponseEntity<>(followers, HttpStatus.OK);
-    }
-
-    @GetMapping("/follow/followings/{userId}")
-    public ResponseEntity<List<String>> getFollowing(@PathVariable Long userId) {
-        List<String> following = followService.getFollowingList(userId);
-        return new ResponseEntity<>(following, HttpStatus.OK);
-    }
 }

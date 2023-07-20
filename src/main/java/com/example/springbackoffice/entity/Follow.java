@@ -18,6 +18,7 @@ public class Follow extends Timestamped {
 
     @Column(nullable = false)
     private Long followingId;
+
     @Column(nullable = false)
     private boolean followed;
 

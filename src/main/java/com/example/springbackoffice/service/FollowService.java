@@ -51,7 +51,6 @@ public class FollowService {
             followRepository.save(follow);
             updateFollowCount(followerId, followingId);
 
-
             if (follow.getFollowed()) {
                 return new ApiResponseDto(200, "팔로우 되었습니다");
             } else {
@@ -59,7 +58,7 @@ public class FollowService {
             }
         }
     }
-
+    // 추가 혹은 취소된 팔로워와 팔로잉 카운트
     private void updateFollowCount (Long followerId, Long followingId) {
         User followingUser = userRepository.findById(followingId).orElseThrow();
         User followerUser = userRepository.findById(followerId).orElseThrow();

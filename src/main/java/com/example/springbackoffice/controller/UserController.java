@@ -3,6 +3,7 @@ package com.example.springbackoffice.controller;
 import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.jwt.JwtUtil;
 import com.example.springbackoffice.security.UserDetailsImpl;
+import com.example.springbackoffice.service.FollowService;
 import com.example.springbackoffice.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final FollowService followService;
 //    private final MailSenderService mailSenderService;
 
     //회원가입
@@ -58,5 +62,15 @@ public class UserController {
     public ApiResponseDto editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.editProfile(profileEditRequestDto, userDetails);
     }
+    @GetMapping("/follow/followers/{userId}")
+    public ResponseEntity<List<String>> getFollowers(@PathVariable Long userId) {
+        List<String> followers = followService.getFollowerList(userId);
+        return new ResponseEntity<>(followers, HttpStatus.OK);
+    }
 
+    @GetMapping("/follow/followings/{userId}")
+    public ResponseEntity<List<String>> getFollowing(@PathVariable Long userId) {
+        List<String> following = followService.getFollowingList(userId);
+        return new ResponseEntity<>(following, HttpStatus.OK);
+    }
 }
