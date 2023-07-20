@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,9 +45,11 @@ public class PostResponseDto {
     }
 
     public PostResponseDto (Post post, List<Comment> commentList) {
-        this.id = post.getUser().getId();
+        this.id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
+        this.postLikeCount = post.getPostLikeCount();
+        this.user_id = post.getUser().getId();
         this.userName = post.getUser().getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
