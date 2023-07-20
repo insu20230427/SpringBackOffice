@@ -1,7 +1,4 @@
 package com.example.springbackoffice.controller;
-
-<<<<<<< HEAD
-
 import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.example.springbackoffice.dto.PostResponseDto;
@@ -10,13 +7,16 @@ import com.example.springbackoffice.service.PostService;
 import com.example.springbackoffice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Slf4j
 @Controller
@@ -25,16 +25,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-    private final UserService userService;
 
-    @PostMapping("/post/write") // 글 작성
+    @PostMapping("/post") // 글 작성
     @ResponseBody
     public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(requestDto, userDetails.getUser());
     }
 
 
-    @GetMapping("/post/all") // 전체 게시글 조회
+    @GetMapping("/post") // 전체 게시글 조회
     @ResponseBody
     public List<PostResponseDto> getPosts() { // 전체 게시글이므로 List형식으로 받아오기
         return postService.getPosts();
@@ -70,7 +69,7 @@ public class PostController {
         } catch (ResponseStatusException e) {
             return ResponseEntity.notFound().build();
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("자신의 게시글에는 좋아요를 할 수 없습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "자신의 게시글에는 좋아요를 할 수 없습니다."));
         }
     }
 }

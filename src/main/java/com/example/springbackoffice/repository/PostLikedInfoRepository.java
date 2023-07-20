@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface PostLikedInfoRepository extends JpaRepository<PostLikedInfo, Long> {
     Optional<PostLikedInfo> findByPostIdAndUserId(Long postId, Long userId);
 
-    Integer countByPostIdAndIsLikedIsTrue(Long postId);
+    Integer countByPostIdAndLikedIsTrue(Long postId);
 
 
 }

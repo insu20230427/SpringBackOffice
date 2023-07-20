@@ -20,6 +20,9 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String contents; // 댓글 본문
 
+    @Column
+    private Integer commentLikedCount;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post; //게시글과 연관 관계
@@ -32,5 +35,10 @@ public class Comment extends Timestamped {
         this.contents = commentRequestDto.getContents();
         this.user = user;
         this.post = post;
+        this.commentLikedCount = 0;
+    }
+
+    public void setCommentLikedCount(Integer commentLikedCount) {
+        this.commentLikedCount = commentLikedCount;
     }
 }

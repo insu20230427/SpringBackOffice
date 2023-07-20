@@ -23,8 +23,8 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     @Column(nullable = false, length = 3000)
     private String contents;
 
-    @Column(nullable = true)
-    private Integer post_like_count;
+    @Column(nullable = false)
+    private Integer postLikeCount;
 
     @JsonIgnore
     @ManyToOne
@@ -40,6 +40,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.user = user;
+        this.postLikeCount = 0;
     }
 
 //    public void addComment(Comment comment) {
@@ -49,5 +50,9 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();
+    }
+
+    public void setPostLikedCount(Integer postLikedCount) {
+        this.postLikeCount = postLikedCount;
     }
 }

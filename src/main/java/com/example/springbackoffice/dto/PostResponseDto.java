@@ -17,7 +17,7 @@ public class PostResponseDto {
     private Long user_id;
     private String userName;
 //    private List<CommentResponseDto> commentResponseDtoList;
-    private Integer post_like_count;
+    private Integer postLikeCount;
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
@@ -25,7 +25,7 @@ public class PostResponseDto {
         this.contents = post.getContents();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
-//        this.post_like_count = post.getPost_like_count();
+        this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
         this.userName = post.getUser().getUsername();
 //        if(post.getCommentList().size()>0) {

@@ -1,15 +1,20 @@
 package com.example.springbackoffice.service;
 
-<<<<<<< HEAD
+import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.CommentRequestDto;
 import com.example.springbackoffice.dto.CommentResponseDto;
 import com.example.springbackoffice.entity.Comment;
+import com.example.springbackoffice.entity.CommentLikedInfo;
 import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.User;
+import com.example.springbackoffice.repository.CommentLikedInfoRepository;
 import com.example.springbackoffice.repository.CommentRepository;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
@@ -72,25 +77,17 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
-    private final CommentRepository commentRepository;
-
-    private final CommentLikedInfoRepository commentLikedInfoRepository;
-
-    public CommentService(CommentRepository commentRepository, CommentLikedInfoRepository commentLikedInfoRepository) {
-        this.commentRepository = commentRepository;
-        this.commentLikedInfoRepository = commentLikedInfoRepository;
-    }
     // comment 좋아요
     @Transactional
     public ApiResponseDto addLikeComment(Long commentId, UserDetailsImpl userDetails) {
-        Long userId = userDetails.getUserId();
+        Long userId = userDetails.getUser().getId();
 
         // 존재하는 댓글인지 확인
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 댓글이 존재하지 않습니다."));
 
         //자신의 댓글에 좋아요 X
-        if (comment.getUser().getUserId().equals(userId)) {
+        if (comment.getUser().getId().equals(userId)) {
             throw new RejectedExecutionException("자신의 댓글에는 '좋아요'를 할 수 없습니다.");
         }
         CommentLikedInfo commentLikedInfo = commentLikedInfoRepository.findByCommentIdAndUserId(commentId, userId).orElse(null);
@@ -100,15 +97,15 @@ public class CommentService {
             commentLikedInfo.setLiked(true);
             commentLikedInfoRepository.save(commentLikedInfo);
             updateCommentLikedCount(commentId);
-            return new ApiResponseDto("좋아요", 200);
+            return new ApiResponseDto(200, "좋아요");
         } else {
             commentLikedInfo.setLiked(!commentLikedInfo.getLiked());
             commentLikedInfoRepository.save(commentLikedInfo);
             updateCommentLikedCount(commentId);
             if (commentLikedInfo.getLiked()) {
-                return new ApiResponseDto("좋아요", 200);
+                return new ApiResponseDto(200, "좋아요");
             } else {
-                return new ApiResponseDto("좋아요 취소", 200);
+                return new ApiResponseDto(200, "좋아요 취소");
             }
         }
     }

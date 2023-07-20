@@ -6,6 +6,13 @@ import jakarta.persistence.*;
 @Table(name = "post_liked_info")
 public class PostLikedInfo extends Timestamped {
 
+    public PostLikedInfo() {
+    }
+    public PostLikedInfo(Long postId, Long userId) {
+        this.postId = postId;
+        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -19,14 +26,6 @@ public class PostLikedInfo extends Timestamped {
 
     @Column(nullable = false)
     private Boolean liked;
-
-    public PostLikedInfo() {
-
-    }
-    public PostLikedInfo(Long postId, Long userId) {
-        this.postId = postId;
-        this.userId = userId;
-    }
 
     public Boolean getLiked() {
         return liked;
