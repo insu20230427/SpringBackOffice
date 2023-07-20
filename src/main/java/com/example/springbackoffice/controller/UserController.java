@@ -1,14 +1,14 @@
 package com.example.springbackoffice.controller;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.AuthRequestDto;
-import com.example.springbackoffice.dto.SignupRequestDto;
+import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.jwt.JwtUtil;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,4 +47,15 @@ public class UserController {
         return ResponseEntity.ok().body(new ApiResponseDto(HttpStatus.OK.value(), "로그인 성공"));
     }
 
+    //회원정보 조회 API
+    @GetMapping("/auth/profile")
+    public ProfileResponseDto showProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.showProfile(userDetails);
+    }
+
+    //회원정보 수정 API
+    @PutMapping("/auth/edit-profile")
+    public ApiResponseDto editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.editProfile(profileEditRequestDto, userDetails);
+    }
 }

@@ -1,13 +1,17 @@
 package com.example.springbackoffice.dto;
 
+import com.example.springbackoffice.entity.Comment;
 import com.example.springbackoffice.entity.Post;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-@Getter
+import java.util.stream.Collectors;
 
+@Getter
+@RequiredArgsConstructor
 public class PostResponseDto {
     private Long id;
     private String title;
@@ -16,9 +20,9 @@ public class PostResponseDto {
     private LocalDateTime modifiedAt;
     private Long user_id;
     private String userName;
-//    private List<CommentResponseDto> commentResponseDtoList;
     private Integer postLikeCount;
-
+    private List<CommentResponseDto> postcommentList;
+// 리스트 C 대문자로 수정
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
@@ -28,6 +32,10 @@ public class PostResponseDto {
         this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
         this.userName = post.getUser().getUsername();
+        this.postcommentList = post.getCommentList() // 댓글 목록 조회
+                .stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
 //        if(post.getCommentList().size()>0) {
 //            this.commentResponseDtoList = new ArrayList<>();
 //            for (Comment comment : post.getCommentList()) {
@@ -35,6 +43,18 @@ public class PostResponseDto {
 //            }
             // getComments를 통해 저장된 post의 commentList의 comment들을
             // PostResponseDto의 commentResponseDtoList에 복사하는 과정
+    }
+
+    public PostResponseDto (Post post, List<Comment> commentList) {
+        this.id = post.getUser().getId();
+        this.title = post.getTitle();
+        this.contents = post.getContents();
+        this.userName = post.getUser().getUsername();
+        this.createdAt = post.getCreatedAt();
+        this.modifiedAt = post.getModifiedAt();
+        this.postcommentList = commentList.stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
 

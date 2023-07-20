@@ -20,7 +20,10 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String contents; // 댓글 본문
 
-    @Column
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private Integer commentLikedCount;
 
     @ManyToOne

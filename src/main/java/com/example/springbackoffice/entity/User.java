@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -41,6 +44,12 @@ public class User {
 //    @Column(name="user_confirmn",nullable = false)
 //    @ColumnDefault("false")
 //    private Boolean isConfirm;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
 
     public User(String username, String password,UserRoleEnum role) {
         this.username = username;
