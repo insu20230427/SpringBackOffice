@@ -36,5 +36,3 @@ public class ApiResponseDto {
     public ApiResponseDto() {
     }
 }
-
-
