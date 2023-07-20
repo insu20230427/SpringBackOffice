@@ -46,10 +46,6 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
         this.postLikeCount = 0;
     }
 
-    public void addComment(Comment comment) {
-        this.commentList.add(comment);
-    }
-
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();

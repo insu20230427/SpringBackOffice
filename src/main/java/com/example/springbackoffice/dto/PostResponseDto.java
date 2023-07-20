@@ -21,7 +21,7 @@ public class PostResponseDto {
     private Long user_id;
     private String userName;
     private Integer postLikeCount;
-    private List<CommentResponseDto> postcommentList;
+    private List<CommentResponseDto> postCommentList;
 // 리스트 C 대문자로 수정
     public PostResponseDto(Post post) {
         this.id = post.getId();
@@ -32,7 +32,7 @@ public class PostResponseDto {
         this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
         this.userName = post.getUser().getUsername();
-        this.postcommentList = post.getCommentList() // 댓글 목록 조회
+        this.postCommentList = post.getCommentList() // 댓글 목록 조회
                 .stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class PostResponseDto {
         this.userName = post.getUser().getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
-        this.postcommentList = commentList.stream()
+        this.postCommentList = commentList.stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());
     }
