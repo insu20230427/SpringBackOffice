@@ -16,11 +16,11 @@ public class UserResponseDto {
     //private UserRoleEnum role;
 
     public UserResponseDto(User user) {
-        this.id=user.getId();
-        this.username=user.getUsername();
+        this.id = user.getId();
+        this.username = user.getUsername();
         //  this.password=user.getPassword();
 //        this.email=user.getEmail();
-        this.intro=user.getSelfIntroduction();
+        this.intro = user.getSelfIntroduction();
         //this.role=user.getRole();
     }
 }

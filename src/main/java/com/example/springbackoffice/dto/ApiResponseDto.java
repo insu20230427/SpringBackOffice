@@ -28,7 +28,8 @@ public class ApiResponseDto {
     }
 
     @Builder
-    public ApiResponseDto(String message, HttpStatusCode httpStatusCode) {
+    public ApiResponseDto(int status, String message, HttpStatusCode httpStatusCode) {
+        this.status = status;
         this.message = message;
         this.httpStatusCode = httpStatusCode;
     }

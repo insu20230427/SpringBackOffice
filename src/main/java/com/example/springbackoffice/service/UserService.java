@@ -84,6 +84,10 @@ public class UserService {
     public ProfileResponseDto showProfile(UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
 
+        if (user == null) {
+            throw new IllegalArgumentException("로그인 또는 토큰 값을 확인 해주세요");
+        }
+
         return new ProfileResponseDto(user);
     }
 
@@ -98,11 +102,11 @@ public class UserService {
         String changePassword = profileEditRequestDto.getChangepassword();
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호
-            return new ApiResponseDto("기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto(400,"기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
         }
 
         if (Objects.equals(password, changePassword)) {
-            return new ApiResponseDto("같은 비밀번호로는 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto(400,"같은 비밀번호로는 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
         //최근 3회 비밀번호 가져오기
@@ -110,7 +114,7 @@ public class UserService {
 
         for (PasswordHistory passwordHistory : passwordHistoryList) {
             if (passwordEncoder.matches(changePassword, passwordHistory.getPassword())) {
-                return new ApiResponseDto("최근 3번동안 사용한 비밀번호는 사용이 불가능합니다.", HttpStatus.BAD_REQUEST);
+                return new ApiResponseDto(400,"최근 3번동안 사용한 비밀번호는 사용이 불가능합니다.", HttpStatus.BAD_REQUEST);
             }
         }
 
@@ -131,6 +135,6 @@ public class UserService {
         user.setPassword(newPassword);
         user.setSelfIntroduction(introduction);
         userRepository.save(user);
-        return new ApiResponseDto("프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
+        return new ApiResponseDto(202, "프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
     }
 }
