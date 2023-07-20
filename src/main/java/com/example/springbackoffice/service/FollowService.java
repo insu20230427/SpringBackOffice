@@ -2,7 +2,6 @@ package com.example.springbackoffice.service;
 
 import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.entity.Follow;
-import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.repository.FollowRepository;
 import com.example.springbackoffice.repository.UserRepository;
@@ -12,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.stream.Collectors;
 
 @Service
 public class FollowService {
@@ -68,5 +69,21 @@ public class FollowService {
 
         followingUser.setFollowerCount(followerCount);
         followerUser.setFollowingCount(followingCount);
+    }
+
+    // 특정 유저의 팔로워 목록 조회
+    public List<String > getFollowerList(Long userId) {
+        List<Follow> followerList = followRepository.findByFollowingId(userId);
+        return followerList.stream()
+                .map(follow -> userRepository.findById(follow.getFollowerId()).map(User::getUsername).orElse(null))
+                .collect(Collectors.toList());
+    }
+
+    // 특정 유저의 팔로잉 목록 조회
+    public List<String > getFollowingList(Long userId) {
+        List<Follow> followingList = followRepository.findByFollowerId(userId);
+        return followingList.stream()
+                .map(follow -> userRepository.findById(follow.getFollowingId()).map(User::getUsername).orElseThrow())
+                .collect(Collectors.toList());
     }
 }

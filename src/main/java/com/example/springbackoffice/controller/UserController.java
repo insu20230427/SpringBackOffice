@@ -58,4 +58,5 @@ public class UserController {
     public ApiResponseDto editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.editProfile(profileEditRequestDto, userDetails);
     }
+
 }

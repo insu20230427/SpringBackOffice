@@ -1,8 +1,10 @@
 package com.example.springbackoffice.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 @Table(name = "follows")
 public class Follow extends Timestamped {
 
@@ -27,11 +29,11 @@ public class Follow extends Timestamped {
         this.followingId = followingId;
     }
 
-    public boolean getFollowed() {
-        return followed;
-    }
-
     public void setFollowed(boolean followed) {
         this.followed = followed;
+    }
+
+    public boolean getFollowed() {
+        return followed;
     }
 }
