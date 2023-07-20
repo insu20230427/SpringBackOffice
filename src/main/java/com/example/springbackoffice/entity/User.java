@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,8 @@ public class User {
     private String password;
 
     // 이메일 인증 구현시 필요 엔티티
-//    @Column(name = "user_email", nullable = false,unique = true)
-//    private String email;
+    @Column(name = "user_email", nullable = false,unique = true)
+    private String email;
 
     // 추후 기능 구현에 쓸 수 있음 (현재는 X)
     @Column(name = "self_introduction")
@@ -56,10 +55,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
-    public User(String username, String password,UserRoleEnum role) {
+    public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
         this.password = password;
-//        this.email = email;
+        this.email = email;
 //        쓰려면 User 안에 String email 추가
         this.role = role;
 //        this.isConfirm=false;

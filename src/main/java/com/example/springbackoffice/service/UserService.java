@@ -75,9 +75,10 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 //        String authkey = requestDto.getAuthKey();
-        User user = new User(username, password, role);
+        User user = new User(username, password, email, role);
         userRepository.save(user);
     }
+
     //회원 정보 조회
     @Transactional (readOnly = true)
     public ProfileResponseDto showProfile(UserDetailsImpl userDetails) {
@@ -94,7 +95,7 @@ public class UserService {
 
         String password = profileEditRequestDto.getPassword();
         String introduction = profileEditRequestDto.getSelfIntroduction();
-        String changePassword = profileEditRequestDto.getChangepassword();;
+        String changePassword = profileEditRequestDto.getChangepassword();
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호
             return new ApiResponseDto("기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
@@ -103,6 +104,7 @@ public class UserService {
         if (Objects.equals(password, changePassword)) {
             return new ApiResponseDto("같은 비밀번호로는 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
+
         //최근 3회 비밀번호 가져오기
         List<PasswordHistory> passwordHistoryList = passwordRepository.findTop3ByUserOrderByModifiedAtDesc(user);
 

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ public class PostResponseDto {
         this.modifiedAt = post.getModifiedAt();
         this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
-        this.userName = post.getUser().getUsername();
+        this.userName = post.getUsername();
         this.postCommentList = post.getCommentList() // 댓글 목록 조회
                 .stream()
                 .map(CommentResponseDto::new)
@@ -46,10 +45,12 @@ public class PostResponseDto {
     }
 
     public PostResponseDto (Post post, List<Comment> commentList) {
-        this.id = post.getUser().getId();
+        this.id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
-        this.userName = post.getUser().getUsername();
+        this.postLikeCount = post.getPostLikeCount();
+        this.user_id = post.getUser().getId();
+        this.userName = post.getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
         this.postCommentList = commentList.stream()
