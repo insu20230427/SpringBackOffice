@@ -103,6 +103,7 @@ public class UserService {
         if (Objects.equals(password, changePassword)) {
             return new ApiResponseDto("같은 비밀번호로는 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
+
         //최근 3회 비밀번호 가져오기
         List<PasswordHistory> passwordHistoryList = passwordRepository.findTop3ByUserOrderByModifiedAtDesc(user);
 
