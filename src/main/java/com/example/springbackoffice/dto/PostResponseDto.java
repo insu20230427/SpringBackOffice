@@ -30,7 +30,7 @@ public class PostResponseDto {
         this.modifiedAt = post.getModifiedAt();
         this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
-        this.userName = post.getUser().getUsername();
+        this.userName = post.getUsername();
         this.postCommentList = post.getCommentList() // 댓글 목록 조회
                 .stream()
                 .map(CommentResponseDto::new)
@@ -50,7 +50,7 @@ public class PostResponseDto {
         this.contents = post.getContents();
         this.postLikeCount = post.getPostLikeCount();
         this.user_id = post.getUser().getId();
-        this.userName = post.getUser().getUsername();
+        this.userName = post.getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
         this.postCommentList = commentList.stream()
