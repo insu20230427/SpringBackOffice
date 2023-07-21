@@ -118,6 +118,29 @@ public class KakaoService {
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email);
     }
+//  카카오톡 사용자 정보 JSON 의 예 (참조)
+
+//    {
+//        "id": 1632335751,
+//            "properties": {
+//        "nickname": "르탄이",
+//                "profile_image": "http://k.kakaocdn.net/...jpg",
+//                "thumbnail_image": "http://k.kakaocdn.net/...jpg"
+//    },
+//        "kakao_account": {
+//        "profile_needs_agreement": false,
+//                "profile": {
+//            "nickname": "르탄이",
+//                    "thumbnail_image_url": "http://k.kakaocdn.net/...jpg",
+//                    "profile_image_url": "http://k.kakaocdn.net/...jpg"
+//        },
+//        "has_email": true,
+//                "email_needs_agreement": false,
+//                "is_email_valid": true,
+//                "is_email_verified": true,
+//                "email": "letan@sparta.com"
+//    }
+//    }
 
 
 
