@@ -4,7 +4,10 @@ import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.jwt.JwtUtil;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.FollowService;
+import com.example.springbackoffice.service.KakaoService;
 import com.example.springbackoffice.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,7 @@ public class UserController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
     private final FollowService followService;
+    private final KakaoService kakaoService;
 //    private final MailSenderService mailSenderService;
 
     //회원가입
@@ -72,5 +76,18 @@ public class UserController {
     public ResponseEntity<List<String>> getFollowing(@PathVariable Long userId) {
         List<String> following = followService.getFollowingList(userId);
         return new ResponseEntity<>(following, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        // code: 카카오 서버로부터 받은 인가 코드 Service 전달 후 인증 처리 및 JWT 반환
+        String token = kakaoService.kakaoLogin(code);
+
+        // Cookie 생성 및 직접 브라우저에 Set
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        return "redirect:/";
     }
 }
