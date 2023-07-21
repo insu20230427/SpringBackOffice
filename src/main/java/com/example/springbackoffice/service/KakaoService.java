@@ -45,7 +45,43 @@ public class KakaoService {
         return null;
     }
 
+    // 액세스 토큰 요청
+    // 받아온 인증코드로 추가적인 토큰 요청 - > 토큰 전달 받기 - > 전달 받은 토큰으로 API 호출하여 토큰 유효성 확인
+    private String getToken(String code) throws JsonProcessingException {
+        // 요청 URL 만들기
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://kauth.kakao.com")
+                .path("/oauth/token")
+                .encode()
+                .build()
+                .toUri();
 
+        // HTTP Header 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HTTP Body 생성
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", "a573f56cbb9621b46e73849496e11cff");
+        body.add("redirect_uri", "http://localhost:8080/api/user/kakao/callback");
+        body.add("code", code);
+
+        RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
+                .post(uri)
+                .headers(headers)
+                .body(body);
+
+        // HTTP 요청 보내기
+        ResponseEntity<String> response = restTemplate.exchange(
+                requestEntity,
+                String.class
+        );
+
+        // HTTP 응답 (JSON) -> 액세스 토큰 파싱
+        JsonNode jsonNode = new ObjectMapper().readTree(response.getBody());
+        return jsonNode.get("access_token").asText();
+    }
 
 
 
