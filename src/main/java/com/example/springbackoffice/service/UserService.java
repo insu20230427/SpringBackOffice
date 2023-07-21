@@ -2,9 +2,11 @@ package com.example.springbackoffice.service;
 
 import com.example.springbackoffice.dto.*;
 import com.example.springbackoffice.entity.PasswordHistory;
+import com.example.springbackoffice.entity.TokenBlacklist;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
 import com.example.springbackoffice.repository.PasswordRepository;
+import com.example.springbackoffice.repository.TokenBlacklistRepository;
 import com.example.springbackoffice.repository.UserRepository;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +76,7 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 //        String authkey = requestDto.getAuthKey();
-        User user = new User(username, password, role);
+        User user = new User(username, password, email, role);
         userRepository.save(user);
     }
     //회원 정보 조회
