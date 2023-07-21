@@ -23,7 +23,7 @@ public class AdminResponseDto {
         this.email = users.getEmail();
         this.role = users.getRole();
         this.postList = users.getPostList().stream()
-                .map(post -> new PostResponseDto(post, post.getCommentList()))
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
         this.commentList = users.getCommentList().stream()
                 .map(CommentResponseDto::new)

@@ -32,6 +32,7 @@ public class UserController {
         }
         return ResponseEntity.status(201).body(new ApiResponseDto(HttpStatus.CREATED.value(), "회원가입 완료 되었습니다."));
     }
+
     //로그인
     @PostMapping("/auth/login")
     public ResponseEntity<ApiResponseDto> login(@RequestBody AuthRequestDto loginRequestDto, HttpServletResponse response) {

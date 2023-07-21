@@ -1,5 +1,6 @@
 package com.example.springbackoffice.entity;
 
+import com.example.springbackoffice.dto.SignupRequestDto;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
