@@ -26,20 +26,19 @@ public class UserService {
     private final PasswordRepository passwordRepository;
 
     private final UserRepository userRepository;
-    // BlackList 를 저장할 Repository
-//    private final TokenBlacklistRepository tokenBlacklistRepository;
+    private final TokenBlacklistRepository tokenBlacklistRepository;
     private final PasswordEncoder passwordEncoder;
 
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    // 로그아웃
-//    @Transactional
-//    public void logout(String token) {
-//        // 토큰을 블랙리스트에 추가
-//        TokenBlacklist tokenBlacklist = new TokenBlacklist(token);
-//        tokenBlacklistRepository.save(tokenBlacklist);
-//    }
+    //로그아웃
+    @Transactional
+    public void logout(String token) {
+        // 토큰을 블랙리스트에 추가
+        TokenBlacklist tokenBlacklist = new TokenBlacklist(token);
+        tokenBlacklistRepository.save(tokenBlacklist);
+    }
 
     //로그인
     public void login(AuthRequestDto requestDto) {
@@ -75,10 +74,9 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 //        String authkey = requestDto.getAuthKey();
-        User user = new User(username, password, email, role);
+        User user = new User(username, password, role);
         userRepository.save(user);
     }
-
     //회원 정보 조회
     @Transactional (readOnly = true)
     public ProfileResponseDto showProfile(UserDetailsImpl userDetails) {
@@ -95,7 +93,7 @@ public class UserService {
 
         String password = profileEditRequestDto.getPassword();
         String introduction = profileEditRequestDto.getSelfIntroduction();
-        String changePassword = profileEditRequestDto.getChangepassword();
+        String changePassword = profileEditRequestDto.getChangepassword();;
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호
             return new ApiResponseDto("기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
