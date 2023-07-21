@@ -25,7 +25,7 @@ public class ProfileResponseDto {
         this.username = user.getUsername();
         this.selfIntroduction = user.getSelfIntroduction();
         this.blogList = user.getPostList().stream()
-                .map(blog -> new PostResponseDto(blog, blog.getCommentList()))
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
         this.commentList = user.getCommentList().stream()
                 .map(CommentResponseDto::new)
