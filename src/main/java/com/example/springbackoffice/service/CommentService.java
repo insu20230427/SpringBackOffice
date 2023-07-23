@@ -1,8 +1,9 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.CommentRequestDto;
-import com.example.springbackoffice.dto.CommentResponseDto;
+
+import com.example.springbackoffice.dto.requestdto.CommentRequestDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.CommentResponseDto;
 import com.example.springbackoffice.entity.*;
 import com.example.springbackoffice.repository.CommentLikedInfoRepository;
 import com.example.springbackoffice.repository.CommentRepository;

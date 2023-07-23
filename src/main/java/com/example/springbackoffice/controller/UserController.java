@@ -1,6 +1,11 @@
 package com.example.springbackoffice.controller;
 
 import com.example.springbackoffice.dto.*;
+import com.example.springbackoffice.dto.requestdto.AuthRequestDto;
+import com.example.springbackoffice.dto.requestdto.ProfileEditRequestDto;
+import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.ProfileResponseDto;
 import com.example.springbackoffice.jwt.JwtUtil;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.FollowService;

@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-//@EqualsAndHashCode
+@EqualsAndHashCode
 @Table(name = "user")
 public class User extends Timestamped {
     @Id
