@@ -67,8 +67,11 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll() // 게시글 조회는 인증없이도 가능하기 때문에 허가해준다. -> posts 의 get 요청들 2개 빼고 인가받게 설정
                         .requestMatchers(HttpMethod.GET,"/api/follow/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/login-page").permitAll()
+                        .requestMatchers("/signup-page").permitAll()
                         .requestMatchers("/api/admin/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll() // '/api/users/'로 시작하는 요청 모두 접근 허가
+                        .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
 
         );
@@ -83,8 +86,8 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // 접근 거부 및 인증 예외 처리를 위한 핸들러를 설정
-        http.exceptionHandling((exceptionHandling)->exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
-        http.exceptionHandling((exceptionHandling)->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint));
+//        http.exceptionHandling((exceptionHandling)->exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
+//        http.exceptionHandling((exceptionHandling)->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint));
         return http.build();        // SecurityFilterChain을 생성
     }
 }

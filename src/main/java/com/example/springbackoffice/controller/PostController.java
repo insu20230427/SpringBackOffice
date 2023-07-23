@@ -61,7 +61,7 @@ public class PostController {
     }
 
     // 좋아요
-    @PutMapping("/posts/{id}/like")
+    @PutMapping("/post/{id}/like")
     public ResponseEntity<ApiResponseDto> addLikePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             ApiResponseDto responseDto = postService.addLikePost(id, userDetails);

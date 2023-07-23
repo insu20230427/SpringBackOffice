@@ -9,10 +9,12 @@ import com.example.springbackoffice.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +31,10 @@ public class UserController {
 
     //회원가입
     @PostMapping("/auth/signup")
-    public ResponseEntity<ApiResponseDto> signup(@RequestBody SignupRequestDto requestDto) { //클라이언트로부터 SignupRequestDto 를 요청 RequestBody 로 받아와서 처리
-
+    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) { //클라이언트로부터 SignupRequestDto 를 요청 RequestBody 로 받아와서 처리
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto("올바른 username와 password를 입력해주십시오.", HttpStatus.BAD_REQUEST.value()));
+        }
         try {
 //            String authKey = mailSenderService.sendSimpleMessage(requestDto.getEmail());
 //            requestDto.setAuthKey(authKey);
