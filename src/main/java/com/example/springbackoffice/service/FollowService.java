@@ -1,6 +1,6 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.example.springbackoffice.entity.Follow;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.repository.FollowRepository;
