@@ -1,11 +1,14 @@
 package com.example.springbackoffice.jwt;
 
+import com.example.springbackoffice.entity.TokenBlacklist;
 import com.example.springbackoffice.entity.UserRoleEnum;
+import com.example.springbackoffice.repository.TokenBlacklistRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -30,8 +33,8 @@ public class JwtUtil {
     // 기능 사용시 활성화
     // 로그아웃 처리 시 토큰 블랙리스트에 대한 repository
     // 토큰 블랙리스트 : 사용된 토큰을 사용하지 못하게 저장하여 관리함
-    //    @Autowired
-    //    private TokenBlacklistRepository toekenBlacklistRepository;
+    @Autowired
+    private TokenBlacklistRepository tokenBlacklistRepository;
 
 
     // Base64 Encode 한 SecretKey
@@ -93,10 +96,10 @@ public class JwtUtil {
 
     // 블랙 리스트 기능 사용시 주석 해제
     // 블랙리스트에 토큰이 있는지 확인, 존재하면 != null 즉 true 반환
-//    public boolean isTokenBlacklisted(String tokenValue) {
-//        TokenBlacklist tokenBlacklist = tokenBlacklistRepository.findByToken(tokenValue).orElse(null);
-//        return tokenBlacklist != null;
-//    }
+    public boolean isTokenBlacklisted(String tokenValue) {
+        TokenBlacklist tokenBlacklist = tokenBlacklistRepository.findByToken(tokenValue).orElse(null);
+        return tokenBlacklist != null;
+    }
 
 
 }

@@ -40,18 +40,33 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String tokenValue = jwtUtil.getJwtFromHeader(req);
 
         if (StringUtils.hasText(tokenValue)) {
-            if(!jwtUtil.validateToken(tokenValue)) {
-                ApiResponseDto responseDto = new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "토큰이 유효하지 않습니다.");
+            if (!jwtUtil.validateToken(tokenValue)) { // false 일 때
+                ApiResponseDto responseDto = new ApiResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 res.setContentType("application/json; charset=UTF-8");
                 res.getWriter().write(objectMapper.writeValueAsString(responseDto));
 
                 return;
             }
-            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-            setAuthentication(info.getSubject());
-        }
+            // 블랙리스트에 존재하는 토큰일 경우 조건문에 true 입력, 로그아웃된 토큰 메세지와  인증불가 코드 반환
+            if (jwtUtil.isTokenBlacklisted(tokenValue)) {
+                ApiResponseDto responseDto = new ApiResponseDto("로그아웃된 토큰입니다.", HttpStatus.UNAUTHORIZED.value());
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.setContentType("application/json; charset=UTF-8");
+                res.getWriter().write(objectMapper.writeValueAsString(responseDto));
+                return;
+            }
 
+            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
+
+            try {
+                setAuthentication(info.getSubject()); // JWT 토큰의 서브젝트 값을 추출 : 토큰이 어떤 사용자를 나타내는지 확인
+                log.info("JWT 검증필터 실행");
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return;
+            }
+        }
         filterChain.doFilter(req, res);
     }
 
