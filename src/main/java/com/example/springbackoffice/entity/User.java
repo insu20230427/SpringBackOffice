@@ -13,9 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Table(name = "user")
-public class User {
+public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -28,7 +28,7 @@ public class User {
     private String password;
 
     // 이메일 인증 구현시 필요 엔티티
-    @Column(name = "user_email", nullable = false,unique = true)
+    @Column(name = "user_email", nullable = false, unique = true)
     private String email;
 
     // 추후 기능 구현에 쓸 수 있음 (현재는 X)
@@ -44,6 +44,7 @@ public class User {
 
     @Column(nullable = false)
     private Integer followingCount;
+
 //    이메일 인증 구현하려면 필요한 엔티티
 //    @Column(name="user_confirmn",nullable = false)
 //    @ColumnDefault("false")
@@ -55,9 +56,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
-    private  Long kakaoId;
+    private Long kakaoId;
 
-    public User(String username,String password, String email, UserRoleEnum role, Long kakaoId) {
+    public User(String username, String password, String email, UserRoleEnum role, Long kakaoId) {
         this.username = username;
         this.password = password;
         this.email = email;

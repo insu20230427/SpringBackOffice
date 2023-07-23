@@ -18,8 +18,6 @@ import java.util.List;
 @RestController
 public class AdminController {
 
-    // RequestParam 전체에서 불러오는 조건 설정!! -> required 설정을 true or false 설정 가능 보통은 false 설정해놓고 RequestParam을 보내지 않으면 전체 return 하는 방식으로 처리
-
     private final AdminService adminService;
 
     // 관리자 페이지 요약 (유저 수, 글 수, 댓글 수)

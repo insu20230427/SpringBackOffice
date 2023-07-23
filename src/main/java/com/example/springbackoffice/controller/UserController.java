@@ -13,6 +13,7 @@ import com.example.springbackoffice.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/auth/signup")
-    public ResponseEntity<ApiResponseDto> signup(@RequestBody SignupRequestDto requestDto) { //클라이언트로부터 SignupRequestDto 를 요청 RequestBody 로 받아와서 처리
+    public ResponseEntity<ApiResponseDto> signup(@RequestBody @Valid SignupRequestDto requestDto) { //클라이언트로부터 SignupRequestDto 를 요청 RequestBody 로 받아와서 처리
 
         try {
 //            String authKey = mailSenderService.sendSimpleMessage(requestDto.getEmail());
@@ -71,6 +72,7 @@ public class UserController {
     public ApiResponseDto editProfile (@RequestBody ProfileEditRequestDto profileEditRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.editProfile(profileEditRequestDto, userDetails);
     }
+
     @GetMapping("/follow/followers/{userId}")
     public ResponseEntity<List<String>> getFollowers(@PathVariable Long userId) {
         List<String> followers = followService.getFollowerList(userId);

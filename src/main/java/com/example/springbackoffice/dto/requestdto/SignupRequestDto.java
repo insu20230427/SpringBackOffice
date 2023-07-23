@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SignupRequestDto {
+
     @Pattern(regexp = "^[a-z0-9]{4,10}$",
             message = "최소 4자 이상, 10자 이하이며 알파벳 소문자, 숫자로 구성되어야 합니다.")
     private String username;

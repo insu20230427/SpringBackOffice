@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -104,6 +105,12 @@ public class UserService {
         String password = profileEditRequestDto.getPassword();
         String introduction = profileEditRequestDto.getSelfIntroduction();
         String changePassword = profileEditRequestDto.getChangepassword();;
+
+
+        // 비밀번호 형식 확인 (정규식)
+        if (!Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+{}:\"<>?,.\\\\/]{8,15}$", changePassword)) {
+            return new ApiResponseDto(400,"비밀번호는 최소 8자 이상, 15자 이하이며 알파벳 대소문자, 숫자로 구성되어야 합니다.", HttpStatus.BAD_REQUEST);
+        }
 
         if (!passwordEncoder.matches(password, user.getPassword())) { // 첫번째 파라미터는 encoding 안된 비밀번호, 두번째는 encoding된 난수 비밀번호
             return new ApiResponseDto(400,"기존 비밀번호를 잘못 입력하셨습니다.", HttpStatus.BAD_REQUEST);
