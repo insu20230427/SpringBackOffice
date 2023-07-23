@@ -6,6 +6,7 @@ import com.example.springbackoffice.dto.PostResponseDto;
 import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.PostLikedInfo;
 import com.example.springbackoffice.entity.User;
+import com.example.springbackoffice.entity.UserRoleEnum;
 import com.example.springbackoffice.repository.PostLikedInfoRepository;
 import com.example.springbackoffice.repository.PostRepository;
 import com.example.springbackoffice.security.UserDetailsImpl;
@@ -68,8 +69,9 @@ public class PostService {
 
         Optional<Post> post = postRepository.findById(id); // 해당id의 Post 가져오기
 
-        if (!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(), user.getUsername())) {
-            log.error("게시글이 존재하지 않거나 게시글 작성자가 아닙니다.");
+        if (!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(), user.getUsername())
+        &&!user.getRole().equals(UserRoleEnum.ADMIN)) {
+            log.error("게시글이 존재하지 않거나 수정 권한이 없습니다.");
             return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "게시글 수정 실패"));
         }
 
@@ -86,8 +88,9 @@ public class PostService {
     public ResponseEntity<ApiResponseDto> deletePost(Long id, User user) {
         Optional<Post> post = postRepository.findById(id);
 
-        if(!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(),user.getUsername())) {
-            log.error("게시글이 존재하지 않거나 게시글의 작성자가 아닙니다.");
+        if(!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(),user.getUsername())
+                &&!user.getRole().equals(UserRoleEnum.ADMIN)) {
+            log.error("게시글이 존재하지 않거나 수정 권한이 없습니다.");
             return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "게시글 삭제 실패"));
         }
 
