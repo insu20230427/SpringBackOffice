@@ -1,6 +1,5 @@
 package com.example.springbackoffice.dto.responsedto;
 
-import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.entity.Post;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,13 +1,15 @@
-package com.example.springbackoffice.dto.requestdto;
+package com.example.springbackoffice.dto.responsedto;
 
 import com.example.springbackoffice.entity.Comment;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class CommentResponseDto {
 
     private Long id;

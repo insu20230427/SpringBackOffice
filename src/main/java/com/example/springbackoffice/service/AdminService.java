@@ -1,13 +1,11 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
 import com.example.springbackoffice.dto.responsedto.*;
 import com.example.springbackoffice.entity.Comment;
 import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
-import com.example.springbackoffice.jwt.JwtUtil;
 import com.example.springbackoffice.repository.CommentRepository;
 import com.example.springbackoffice.repository.PostRepository;
 import com.example.springbackoffice.repository.UserRepository;
@@ -32,7 +30,6 @@ public class AdminService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
 
 
     public AdminSummaryResponseDto showSummary(UserDetailsImpl userDetails) {

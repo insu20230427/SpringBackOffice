@@ -2,7 +2,7 @@ package com.example.springbackoffice.controller;
 
 import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.example.springbackoffice.dto.requestdto.CommentRequestDto;
-import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
+import com.example.springbackoffice.dto.responsedto.CommentResponseDto;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.CommentService;
 import lombok.RequiredArgsConstructor;

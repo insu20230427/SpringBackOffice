@@ -1,6 +1,6 @@
 package com.example.springbackoffice.controller;
 
-import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
+import com.example.springbackoffice.dto.responsedto.CommentResponseDto;
 import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
 import com.example.springbackoffice.dto.responsedto.*;
 import com.example.springbackoffice.security.UserDetailsImpl;
