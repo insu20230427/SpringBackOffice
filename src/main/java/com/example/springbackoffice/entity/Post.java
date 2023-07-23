@@ -45,6 +45,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+        this.username = user.getUsername();
         this.user = user;
         this.username = user.getUsername();
         this.postLikeCount = 0;
@@ -53,6 +54,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();
+        this.username = user.getUsername();
     }
 
     public void setPostLikedCount(Integer postLikedCount) {

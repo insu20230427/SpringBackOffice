@@ -1,12 +1,9 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
-import com.example.springbackoffice.dto.requestdto.CommentRequestDto;
-import com.example.springbackoffice.dto.responsedto.CommentResponseDto;
-import com.example.springbackoffice.entity.Comment;
-import com.example.springbackoffice.entity.CommentLikedInfo;
-import com.example.springbackoffice.entity.Post;
-import com.example.springbackoffice.entity.User;
+import com.example.springbackoffice.dto.ApiResponseDto;
+import com.example.springbackoffice.dto.CommentRequestDto;
+import com.example.springbackoffice.dto.CommentResponseDto;
+import com.example.springbackoffice.entity.*;
 import com.example.springbackoffice.repository.CommentLikedInfoRepository;
 import com.example.springbackoffice.repository.CommentRepository;
 import com.example.springbackoffice.security.UserDetailsImpl;
@@ -43,10 +40,12 @@ public class CommentService {
     @Transactional //댓글 수정
     public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto, User user) {
 
-        Comment comment = commentRepository.findById(id).orElseThrow();
+        Comment comment = commentRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 댓글입니다."));;
 
         //작성자 확인
-        if (!comment.getUser().getId().equals(user.getId())) {
+        if (!user.getRole().equals(UserRoleEnum.ADMIN)
+               && !comment.getUser().getId().equals(user.getId())) {
             throw new RejectedExecutionException();
         }
 
@@ -61,7 +60,8 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElseThrow();
 
         // 요청자가 운영자 이거나 댓글 작성자(post.user) 와 요청자(user) 가 같은지 체크
-        if (!comment.getUser().getId().equals(user.getId())) {
+        if (!user.getRole().equals(UserRoleEnum.ADMIN) &&
+                !comment.getUser().getId().equals(user.getId())) {
             throw new RejectedExecutionException();
         }
 
