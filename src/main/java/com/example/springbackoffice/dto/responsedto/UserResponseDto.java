@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
 import com.example.springbackoffice.entity.User;
 import lombok.Getter;
@@ -18,11 +18,11 @@ public class UserResponseDto {
     private Integer followingCount;
 
     public UserResponseDto(User user) {
-        this.id=user.getId();
-        this.username=user.getUsername();
+        this.id = user.getId();
+        this.username = user.getUsername();
         //  this.password=user.getPassword();
 //        this.email=user.getEmail();
-        this.intro=user.getSelfIntroduction();
+        this.intro = user.getSelfIntroduction();
         //this.role=user.getRole();
         this.followerCount = user.getFollowerCount();
         this.followingCount = user.getFollowingCount();

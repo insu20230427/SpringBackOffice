@@ -1,19 +1,17 @@
 package com.example.springbackoffice.controller;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.CommentRequestDto;
-import com.example.springbackoffice.dto.CommentResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.requestdto.CommentRequestDto;
+import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
 
@@ -47,8 +45,8 @@ public class CommentController {
     @PutMapping("/comments/{id}") // 댓글 수정
     public ResponseEntity<ApiResponseDto> updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
         try {
-            CommentResponseDto commentResult = commentService.updateComment(id, requestDto, userDetails.getUser());
-            return ResponseEntity.ok().body(commentResult);
+            commentService.updateComment(id, requestDto, userDetails.getUser());
+            return ResponseEntity.accepted().body(new ApiResponseDto(202, "댓글이 수정되었습니다", HttpStatus.ACCEPTED));
 
         } catch (RejectedExecutionException e) {
             return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "작성자만 수정 할 수 있습니다."));

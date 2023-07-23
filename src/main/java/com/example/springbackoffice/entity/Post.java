@@ -1,6 +1,6 @@
 package com.example.springbackoffice.entity;
 
-import com.example.springbackoffice.dto.PostRequestDto;
+import com.example.springbackoffice.dto.requestdto.PostRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -46,6 +46,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.user = user;
+        this.username = user.getUsername();
         this.postLikeCount = 0;
     }
 

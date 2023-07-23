@@ -1,10 +1,9 @@
 package com.example.springbackoffice.controller;
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.PostRequestDto;
-import com.example.springbackoffice.dto.PostResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.requestdto.PostRequestDto;
+import com.example.springbackoffice.dto.responsedto.PostResponseDto;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.PostService;
-import com.example.springbackoffice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

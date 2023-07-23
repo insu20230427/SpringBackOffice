@@ -1,6 +1,6 @@
 package com.example.springbackoffice.exception;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

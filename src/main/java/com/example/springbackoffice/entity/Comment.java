@@ -1,6 +1,6 @@
 package com.example.springbackoffice.entity;
 
-import com.example.springbackoffice.dto.CommentRequestDto;
+import com.example.springbackoffice.dto.requestdto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

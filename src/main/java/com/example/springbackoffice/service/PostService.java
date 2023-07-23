@@ -1,8 +1,8 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
-import com.example.springbackoffice.dto.PostRequestDto;
-import com.example.springbackoffice.dto.PostResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.requestdto.PostRequestDto;
+import com.example.springbackoffice.dto.responsedto.PostResponseDto;
 import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.PostLikedInfo;
 import com.example.springbackoffice.entity.User;

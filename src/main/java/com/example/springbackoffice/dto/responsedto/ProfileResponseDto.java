@@ -1,5 +1,6 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
+import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class ProfileResponseDto {
         this.username = user.getUsername();
         this.selfIntroduction = user.getSelfIntroduction();
         this.blogList = user.getPostList().stream()
-                .map(blog -> new PostResponseDto(blog, blog.getCommentList()))
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
         this.commentList = user.getCommentList().stream()
                 .map(CommentResponseDto::new)

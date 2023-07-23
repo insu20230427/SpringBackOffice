@@ -1,5 +1,6 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
+import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class AdminResponseDto {
         this.email = users.getEmail();
         this.role = users.getRole();
         this.postList = users.getPostList().stream()
-                .map(post -> new PostResponseDto(post, post.getCommentList()))
+                .map(PostResponseDto::new)
                 .collect(Collectors.toList());
         this.commentList = users.getCommentList().stream()
                 .map(CommentResponseDto::new)

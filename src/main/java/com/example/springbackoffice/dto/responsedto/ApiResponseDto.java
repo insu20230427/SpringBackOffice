@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -34,7 +34,8 @@ public class ApiResponseDto {
     }
 
     @Builder
-    public ApiResponseDto(String message, HttpStatusCode httpStatusCode) {
+    public ApiResponseDto(int status, String message, HttpStatusCode httpStatusCode) {
+        this.status = status;
         this.message = message;
         this.httpStatusCode = httpStatusCode;
     }

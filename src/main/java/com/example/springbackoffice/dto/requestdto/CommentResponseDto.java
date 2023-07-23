@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.requestdto;
 
 import com.example.springbackoffice.entity.Comment;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CommentResponseDto extends ApiResponseDto{
+public class CommentResponseDto {
 
     private Long id;
     private String contents; // 본문

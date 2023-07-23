@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.requestdto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
@@ -22,7 +22,10 @@ public class SignupRequestDto {
     private String email;
 
     private boolean admin = false;
+
     private String adminToken = "";
+
+    private String selfIntroduction;
 //    private String authKey;
 //    private boolean isConfirm =false;
 }
