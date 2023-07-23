@@ -1,6 +1,6 @@
 package com.example.springbackoffice.entity;
 
-import com.example.springbackoffice.dto.PostRequestDto;
+import com.example.springbackoffice.dto.requestdto.PostRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;

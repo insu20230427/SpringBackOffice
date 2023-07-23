@@ -1,6 +1,10 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.*;
+import com.example.springbackoffice.dto.requestdto.AuthRequestDto;
+import com.example.springbackoffice.dto.requestdto.ProfileEditRequestDto;
+import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.ProfileResponseDto;
 import com.example.springbackoffice.entity.PasswordHistory;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;

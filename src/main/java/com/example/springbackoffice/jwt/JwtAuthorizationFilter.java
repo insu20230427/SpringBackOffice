@@ -1,6 +1,6 @@
 package com.example.springbackoffice.jwt;
 
-import com.example.springbackoffice.dto.ApiResponseDto;
+import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.example.springbackoffice.security.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;

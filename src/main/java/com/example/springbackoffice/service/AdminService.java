@@ -1,6 +1,8 @@
 package com.example.springbackoffice.service;
 
-import com.example.springbackoffice.dto.*;
+import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
+import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
+import com.example.springbackoffice.dto.responsedto.*;
 import com.example.springbackoffice.entity.Comment;
 import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.User;
@@ -13,13 +15,11 @@ import com.example.springbackoffice.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

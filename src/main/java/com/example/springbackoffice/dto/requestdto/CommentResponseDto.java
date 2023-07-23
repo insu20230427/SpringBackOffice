@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.requestdto;
 
 import com.example.springbackoffice.entity.Comment;
 import lombok.Getter;

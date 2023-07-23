@@ -1,4 +1,4 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

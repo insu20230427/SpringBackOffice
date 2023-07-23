@@ -1,5 +1,6 @@
-package com.example.springbackoffice.dto;
+package com.example.springbackoffice.dto.responsedto;
 
+import com.example.springbackoffice.dto.requestdto.CommentResponseDto;
 import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.entity.UserRoleEnum;
 import lombok.Getter;
