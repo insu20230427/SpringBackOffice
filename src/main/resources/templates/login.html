@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<form id="loginForm">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required><br>
+
+  <label for="role">Role:</label>
+  <select id="role" name="role">
+    <option value="USER">User</option>
+    <option value="ADMIN">Admin</option>
+  </select><br>
+
+  <button type="button" id="loginButton">Login</button> <!-- 수정된 부분: type="submit"에서 type="button"으로 변경 -->
+</form>
+
+<script src="login.js"></script>
+</body>
+</html>
