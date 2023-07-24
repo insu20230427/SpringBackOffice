@@ -38,7 +38,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private User user;
 
 
-    @OneToMany( mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "post",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
 
