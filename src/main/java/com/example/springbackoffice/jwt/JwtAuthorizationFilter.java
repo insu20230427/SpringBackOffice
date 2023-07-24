@@ -41,7 +41,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         if (StringUtils.hasText(tokenValue)) {
             if (!jwtUtil.validateToken(tokenValue)) { // false 일 때
-                ApiResponseDto responseDto = new ApiResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+                ApiResponseDto responseDto = new ApiResponseDto(400,"토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
                 res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 res.setContentType("application/json; charset=UTF-8");
                 res.getWriter().write(objectMapper.writeValueAsString(responseDto));
