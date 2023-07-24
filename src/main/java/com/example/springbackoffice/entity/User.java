@@ -13,12 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Table(name = "user")
 public class User extends Timestamped {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
     @Column(name = "user_name", nullable = false, unique = true)

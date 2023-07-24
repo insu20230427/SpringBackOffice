@@ -23,7 +23,7 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column
     private Integer commentLikedCount;
 
     @ManyToOne

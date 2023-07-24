@@ -148,4 +148,5 @@ public class UserService {
         userRepository.save(user);
         return new ApiResponseDto(202, "프로필 변경에 성공했습니다", HttpStatus.ACCEPTED);
     }
+
 }

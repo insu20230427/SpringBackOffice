@@ -220,9 +220,9 @@ public class AdminService {
             // 유저가 존재하는 경우에만 아래 로직을 수행.
             Comment foundComment = optionalComment.get();
             commentRepository.delete(foundComment);
-            return new ApiResponseDto(400, "해당 유저는 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto(202, "댓글을 삭제 하였습니다.", HttpStatus.ACCEPTED);
         } else {
-            return new ApiResponseDto(202, "유저를 삭제 하였습니다.", HttpStatus.ACCEPTED);
+            return new ApiResponseDto(400, "해당 댓글은 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
     }
 

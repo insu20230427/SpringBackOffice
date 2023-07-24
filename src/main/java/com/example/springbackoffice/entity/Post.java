@@ -29,7 +29,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column
     private Integer postLikeCount;
 
     @JsonIgnore
@@ -45,7 +45,6 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.username = user.getUsername();
         this.user = user;
         this.username = user.getUsername();
         this.postLikeCount = 0;

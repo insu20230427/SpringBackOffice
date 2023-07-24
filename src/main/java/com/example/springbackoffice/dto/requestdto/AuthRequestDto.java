@@ -14,7 +14,4 @@ public class AuthRequestDto {
     private  String password;
 
     private UserRoleEnum role; // 회원 권한 (admin, user)
-
-
-
 }
